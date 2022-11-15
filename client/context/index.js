@@ -11,8 +11,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: {
-          authenticating: true,
           ...state.user,
+          authenticating: true,
         },
       };
     }
@@ -31,6 +31,8 @@ const reducer = (state, action) => {
         ...state,
         user: {
           ...state.user,
+          authenticating: false,
+          authenticated: false,
           error: action.payload,
         },
       };

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { signup } from "../../client/request";
 import { useRouter } from "next/router";
+import { useStore } from "../../client/context";
+import { getValue } from "../../utils/common";
 
 const Signup = (props) => {
   const [name, setName] = useState("");
@@ -8,6 +10,8 @@ const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
+  const [state] = useStore();
+  const user = getValue(state, ["user"], null);
 
   const signupHandler = async (e) => {
     e.preventDefault();
@@ -25,6 +29,11 @@ const Signup = (props) => {
       router.replace(`/login`);
     }
   };
+
+  if (user && user.authenticated) {
+    router.replace(`/`);
+    return null;
+  }
 
   return (
     <main className="form-signin">

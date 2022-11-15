@@ -3,6 +3,7 @@ import { getSession, signIn } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useStore } from "../../client/context";
 import { authConstant } from "../../client/context/constants";
+import { getValue } from "../../utils/common";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const Login = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
   const [state, dispatch] = useStore();
+  const user = getValue(state, ["user"], null);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -26,6 +28,11 @@ const Login = (props) => {
       setErrorMessage(result.error);
     }
   };
+
+  if (user && user.authenticated) {
+    router.replace(`/`);
+    return null;
+  }
 
   return (
     <main className="form-signin">

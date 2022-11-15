@@ -1,5 +1,7 @@
+import { signout } from "next-auth/client";
 import Link from "next/link";
 import { useStore } from "../../client/context";
+import { authConstant } from "../../client/context/constants";
 import { getValue } from "../../utils/common";
 
 const Header = (props) => {
@@ -51,9 +53,20 @@ const Header = (props) => {
               </svg>
             </a>
             {authenticated ? (
-              <Link href={`/`} className="btn btn-sm btn-outline-secondary ">
+              <a
+                className="btn btn-sm btn-outline-secondary "
+                onClick={() => {
+                  signout({
+                    redirect: false,
+                  }).then((result) => {
+                    dispatch({
+                      type: authConstant.LOGIN_FAILURE,
+                    });
+                  });
+                }}
+              >
                 Logout
-              </Link>
+              </a>
             ) : (
               <>
                 <Link
