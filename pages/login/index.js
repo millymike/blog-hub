@@ -1,22 +1,28 @@
 import { useState } from "react";
-import { signIn } from "next-auth/client";
+import { getSession, signIn } from "next-auth/client";
 import { useRouter } from "next/router";
+import { useStore } from "../../client/context";
+import { authConstant } from "../../client/context/constants";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
+  const [state, dispatch] = useStore();
 
   const loginHandler = async (e) => {
     e.preventDefault();
 
     const payload = { email, password };
+    dispatch({ type: authConstant.LOGIN_REQUEST });
     const result = await signIn("credentials", { ...payload, redirect: false });
-    console.log({ result });
     if (!result.error) {
+      const session = await getSession();
+      dispatch({ type: authConstant.LOGIN_SUCCESS, payload: session });
       router.replace(`/`);
     } else {
+      dispatch({ type: authConstant.LOGIN_FAILURE, payload: result.error });
       setErrorMessage(result.error);
     }
   };

@@ -1,15 +1,29 @@
 import Link from "next/link";
+import { useStore } from "../../client/context";
+import { getValue } from "../../utils/common";
 
 const Header = (props) => {
+  const [state, dispatch] = useStore();
+  const user = getValue(state, ["user"], null);
+  const authenticated = getValue(state, ["user", "authenticated"], false);
+  console.log({ state });
+
   return (
     <div className="container">
       <header className="blog-header py-3">
         <div className="row flex-nowrap justify-content-between align-items-center">
           <div className="col-4 pt-1">
-            <Link href={`/profile`} className="link-secondary">
-              {" "}
-              MikeMilly
-            </Link>
+            {authenticated ? (
+              <Link href={`/profile`} className="link-secondary">
+                {" "}
+                {user.name}
+              </Link>
+            ) : (
+              <Link href={`/`} className="link-secondary">
+                {" "}
+                Welcome Guest
+              </Link>
+            )}
           </div>
           <div className="col-4 text-center">
             <Link href={`/`} className="blog-header-logo text-dark">
@@ -36,18 +50,26 @@ const Header = (props) => {
                 <path d="M21 21l-5.2-5.2" />
               </svg>
             </a>
-            <Link
-              href={`/signup`}
-              className="btn btn-sm btn-outline-secondary user-login-btn"
-            >
-              Sign up
-            </Link>
-            <Link
-              href={`/login`}
-              className="btn btn-sm btn-outline-secondary user-login-btn"
-            >
-              Sign in
-            </Link>
+            {authenticated ? (
+              <Link href={`/`} className="btn btn-sm btn-outline-secondary ">
+                Logout
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href={`/signup`}
+                  className="btn btn-sm btn-outline-secondary user-login-btn"
+                >
+                  Sign up
+                </Link>
+                <Link
+                  href={`/login`}
+                  className="btn btn-sm btn-outline-secondary user-login-btn"
+                >
+                  Sign in
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
