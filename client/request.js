@@ -31,3 +31,13 @@ export const getAllPosts = async () => {
     return getValue(error, ["response", "data"]);
   }
 };
+
+export const getSinglePosts = async (id) => {
+  try {
+    const res = await axios.get(baseUrl + `/post/${id}`);
+
+    return res.data;
+  } catch (error) {
+    return getValue(error, ["response", "data"]);
+  }
+};

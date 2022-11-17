@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllPosts } from "../client/request";
 
 export const getStaticProps = async (ctx) => {
@@ -32,6 +33,12 @@ export default function Home({ posts }) {
                 <p class="blog-post-meta">
                   {post.createdAt} by <a href="#">Mark</a>
                 </p>
+
+                <Link
+                  href={`/post/${post._id}/${post.slug.toLocaleLowerCase()}`}
+                >
+                  View More
+                </Link>
               </article>
             </div>
           </div>
