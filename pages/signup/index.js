@@ -3,6 +3,7 @@ import { signup } from "../../client/request";
 import { useRouter } from "next/router";
 import { useStore } from "../../client/context";
 import { getValue } from "../../utils/common";
+import Loader from "../../components/Loader";
 
 const Signup = (props) => {
   const [name, setName] = useState("");
@@ -29,6 +30,10 @@ const Signup = (props) => {
       router.replace(`/login`);
     }
   };
+
+  if (user && user.authenticating) {
+    return <Loader />;
+  }
 
   if (user && user.authenticated) {
     router.replace(`/`);

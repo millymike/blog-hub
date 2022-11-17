@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useStore } from "../../client/context";
 import { authConstant } from "../../client/context/constants";
 import { getValue } from "../../utils/common";
+import Loader from "../../components/Loader";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -28,6 +29,9 @@ const Login = (props) => {
       setErrorMessage(result.error);
     }
   };
+  if (user && user.authenticating) {
+    return <Loader />;
+  }
 
   if (user && user.authenticated) {
     router.replace(`/`);

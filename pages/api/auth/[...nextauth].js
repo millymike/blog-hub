@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../models/user";
 import bcrypt from "bcrypt";
 import { validateAllOnce } from "../../../utils/common";
+import { dbConnect } from "../../../lib/db-connect";
 
 export default NextAuth({
   providers: [
@@ -24,6 +25,9 @@ export default NextAuth({
           console.log({ email, password });
 
           validateAllOnce({ email, password });
+
+          //db connect
+          await dbConnect();
 
           const user = await User.findOne({ email }).exec();
           if (!user) {

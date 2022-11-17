@@ -49,7 +49,7 @@ export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
     user: {
       authenticated: false,
-      authenticating: false,
+      authenticating: true,
       error: null,
     },
   });
