@@ -53,20 +53,29 @@ const Header = (props) => {
               </svg>
             </a>
             {authenticated ? (
-              <a
-                className="btn btn-sm btn-outline-secondary "
-                onClick={() => {
-                  signout({
-                    redirect: false,
-                  }).then((result) => {
-                    dispatch({
-                      type: authConstant.LOGIN_FAILURE,
+              <>
+                <Link
+                  href={`/post/create`}
+                  className="btn btn-sm btn-outline-secondary user-login-btn"
+                >
+                  Create
+                </Link>
+
+                <a
+                  className="btn btn-sm btn-outline-secondary user-login-btn"
+                  onClick={() => {
+                    signout({
+                      redirect: false,
+                    }).then((result) => {
+                      dispatch({
+                        type: authConstant.LOGIN_FAILURE,
+                      });
                     });
-                  });
-                }}
-              >
-                Logout
-              </a>
+                  }}
+                >
+                  Logout
+                </a>
+              </>
             ) : (
               <>
                 <Link
