@@ -21,3 +21,13 @@ export const createPost = async (form) => {
     return getValue(error, ["response", "data"]);
   }
 };
+
+export const getAllPosts = async () => {
+  try {
+    const res = await axios.get(baseUrl + `/post`);
+
+    return res.data;
+  } catch (error) {
+    return getValue(error, ["response", "data"]);
+  }
+};
