@@ -31,7 +31,7 @@ export default function Home({ posts }) {
               <article class="blog-post">
                 <h2 class="blog-post-title mb-1">{post.title}</h2>
                 <p class="blog-post-meta">
-                  {post.createdAt} by <a href="#">Mark</a>
+                  {post.createdAt} by <a href="#">{post.user.name}</a>
                 </p>
 
                 <Link
@@ -41,6 +41,7 @@ export default function Home({ posts }) {
                 </Link>
               </article>
             </div>
+            <hr />
           </div>
         ))}
     </div>
