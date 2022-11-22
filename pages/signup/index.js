@@ -9,6 +9,7 @@ const Signup = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
   const [state] = useStore();
@@ -18,6 +19,7 @@ const Signup = (props) => {
     e.preventDefault();
 
     const payload = { name, email, password };
+
     const result = await signup(payload);
     if (result.hasError) {
       setErrorMessage(result.errorMessage);
